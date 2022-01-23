@@ -1,0 +1,9 @@
+.home {
+  background-color: lightgray;
+  height: 800px;
+  padding-top: 50px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
