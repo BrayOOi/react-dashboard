@@ -33,7 +33,7 @@ const BaseDashboard: React.FC = () => {
             gridRowStart: chart.rows[0],
             gridRowEnd: chart.rows[1]
           }}>
-
+          <Chart {...chart} />
         </div>
       ))}
     </div>
