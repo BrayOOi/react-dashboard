@@ -7,7 +7,7 @@ import styles from './Home.module.css';
 const Home: React.FC = () => {
   return (
     <main className={styles.home}>
-
+      <BaseDashboard />
     </main>
   );
 };
