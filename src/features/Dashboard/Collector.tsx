@@ -3,9 +3,11 @@ import React from 'react';
 import { useDrop } from 'react-dnd';
 import { useAppDispatch } from '../../app/hooks';
 import { LIGHT_GREEN } from '../../constants/colors';
+import { DEFAULT_CHART_HEIGHT, DEFAULT_CHART_WIDTH } from '../../constants/constants';
 import ITEM_TYPES from '../../constants/dnd';
 import { ChartType } from '../../presentation/chart/Chart';
 import { moveChart } from './baseDashboardSlice';
+import { calculateNewCoords, canDropChart } from './utils';
 
 interface CollectorProps {
   column: number;
@@ -25,11 +27,11 @@ const Collector: React.FC<CollectorProps> = ({
       drop: (item: ChartType) => dispatch(moveChart({
         targetId: item.id,
         newCoords: {
-          columns: [column, column+1],
-          rows: [row, row+1]
+          columns: calculateNewCoords(column, item.columns),
+          rows: calculateNewCoords(row, item.rows),
         }
       })),
-      canDrop: () => !isOccupied,
+      canDrop: (item: ChartType) => !isOccupied && canDropChart(row, column, item),
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
         canDrop: !!monitor.canDrop(),
