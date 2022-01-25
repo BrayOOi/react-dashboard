@@ -1,10 +1,14 @@
 import React from 'react';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
 
-import mockData from './mock-data';
 import { calculateHeight, calculateWidth } from './utils';
 
+import styles from './Chart.module.css';
+
+import mockData from './mock-data';
+
 export type ChartType = {
+  id: string;
   columns: [number, number];
   rows: [number, number];
   type: string; //TODO
@@ -22,6 +26,9 @@ const Chart: React.FC<ChartType> = ({
       height={height}
       width={width}
       data={mockData}
+      style={{
+        cursor: 'grab'
+      }}
       margin={{
         top: 20,
       }}>
