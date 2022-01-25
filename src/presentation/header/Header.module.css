@@ -8,9 +8,15 @@
 }
 
 .brand {
-
+  color: white;
 }
 
-.actions {
+.action-container {
+  display: flex;
+  justify-content: space-between;
+  width: 80px;
+}
 
+.action {
+  cursor: pointer;
 }
