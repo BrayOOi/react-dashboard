@@ -2,8 +2,3 @@
   display: grid;
   background-color: lightgray;
 }
-
-.chart {
-  border: 2px dotted black;
-  border-radius: 2%;
-}

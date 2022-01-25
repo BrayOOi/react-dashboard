@@ -1,0 +1,7 @@
+.chart {
+  border: 2px dotted black;
+  border-radius: 2%;
+  z-index: 2;
+  background-color: lightgray;
+  cursor: grab;
+}

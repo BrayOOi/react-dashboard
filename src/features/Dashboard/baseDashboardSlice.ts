@@ -44,12 +44,33 @@ export const baseDashboardSlice = createSlice({
     loadMap: (state, action: PayloadAction<ChartMap>) => {
       state.data = action.payload;
     },
+
+    resizeChart: (state, action: PayloadAction<ChartType>) => {
+      state.data[action.payload.id] = action.payload;
+    },
+    moveChart: (state, action: PayloadAction<{
+      targetId: string;
+      newCoords: {
+        columns: [number, number];
+        rows: [number, number];
+      };
+    }>) => {
+      const { targetId, newCoords } = action.payload;
+      state.data[targetId].rows = newCoords.rows;
+      state.data[targetId].columns = newCoords.columns;
+    },
+    discardChart: (state, action: PayloadAction<string>) => {
+      delete state.data[action.payload];
     }
   }
 });
 
 export const {
   loadMap,
+
+  resizeChart,
+  moveChart,
+  discardChart,
 } = baseDashboardSlice.actions;
 
 export default baseDashboardSlice.reducer;

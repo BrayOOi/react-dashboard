@@ -1,4 +1,10 @@
+import React, { useMemo } from 'react';
 import useAppSelector from '../../app/hooks/useAppSelector';
+import { ChartType } from '../../presentation/chart/Chart';
+import { ChartMap } from './baseDashboardSlice';
+
+import Collector from './Collector';
+import ChartContainer from '../../presentation/chart/ChartContainer';
 
 import {
   DEFAULT_CHART_HEIGHT,
@@ -14,6 +20,13 @@ import styles from './Dashboard.module.css';
 const BaseDashboard: React.FC = () => {
   const dashboardState = useAppSelector(state => state.dashboard);
 
+  const memoizedOccupiedMap = useMemo(() => 
+    occupiedMapGen(
+      dashboardState.data,
+      dashboardState.totalWidthUnit,
+      dashboardState.totalHeightUnit
+    ), [dashboardState.data]);
+
   return (
     <div
       className={styles.dashboard}
@@ -25,21 +38,48 @@ const BaseDashboard: React.FC = () => {
         padding: DEFAULT_DASHBOARD_GAP
       }}
     >
-      {dashboardState.data.map(chart => (
-        <div
-          className={styles.chart}
-          style={{
-            padding: DEFAULT_CHART_PADDING,
-            gridColumnStart: chart.columns[0],
-            gridColumnEnd: chart.columns[1],
-            gridRowStart: chart.rows[0],
-            gridRowEnd: chart.rows[1]
-          }}>
-          <Chart {...chart} />
-        </div>
+      {Array(DEFAULT_DASHBOARD_HEIGHT_UNIT).fill(0).map((_, row) => (
+        Array(DEFAULT_DASHBOARD_WIDTH_UNIT).fill(0).map((_, column) => (
+          <Collector
+            key={`${row},${column}`}
+            column={column + 1}
+            row={row + 1}
+            isOccupied={memoizedOccupiedMap[row][column]}
+          />
+        ))
+      ))}
+
+      {Object.values(dashboardState.data).map(chart => (
+        <ChartContainer
+          key={chart.id}
+          columnStart={chart.columns[0]}
+          columnEnd={chart.columns[1]}
+          rowStart={chart.rows[0]}
+          rowEnd={chart.rows[1]}
+
+          chart={chart}
+        />
       ))}
     </div>
   );
 };
+
+const occupiedMapGen = (
+  charts: ChartMap,
+  totalWidth: number,
+  totalHeight: number,
+  ): Array<Array<boolean>> => {
+  let dashboardMap = Array(totalHeight).fill(0).map(() => Array(totalWidth).fill(false));
+
+  Object.values(charts).forEach((chart: ChartType) => {
+    for (let chartColumn = chart.columns[0] - 1; chartColumn < chart.columns[1] - 1; chartColumn++) {
+      for (let chartRow = chart.rows[0] - 1; chartRow < chart.rows[1] - 1; chartRow++) {
+        dashboardMap[chartRow][chartColumn] = true;
+      }
+    }
+  });
+
+  return dashboardMap;
+}
 
 export default BaseDashboard;
