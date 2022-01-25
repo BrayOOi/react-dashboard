@@ -31,13 +31,14 @@ const Collector: React.FC<CollectorProps> = ({
           rows: calculateNewCoords(row, item.rows),
         }
       })),
-      canDrop: (item: ChartType) => !isOccupied && canDropChart(row, column, item),
+      canDrop: (item: ChartType) => 
+        !isOccupied && canDropChart(row, column, item),
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
         canDrop: !!monitor.canDrop(),
       })
     }),
-    []
+    [isOccupied]
   );
 
   return (
