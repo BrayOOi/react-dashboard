@@ -1,23 +1,25 @@
-import React, { useReducer } from 'react';
-import Chart from '../../presentation/chart/Chart';
-import baseDashboardReducer, { initialState } from './baseDashboardSlice';
+import useAppSelector from '../../app/hooks/useAppSelector';
 
 import {
+  DEFAULT_CHART_HEIGHT,
   DEFAULT_CHART_PADDING,
-  DEFAULT_DASHBOARD_GAP
+  DEFAULT_CHART_WIDTH,
+  DEFAULT_DASHBOARD_GAP,
+  DEFAULT_DASHBOARD_HEIGHT_UNIT,
+  DEFAULT_DASHBOARD_WIDTH_UNIT
 } from '../../constants/constants';
 
 import styles from './Dashboard.module.css';
 
 const BaseDashboard: React.FC = () => {
-  const [dashboardState, localDispatch] = useReducer(baseDashboardReducer, initialState);
+  const dashboardState = useAppSelector(state => state.dashboard);
 
   return (
     <div
       className={styles.dashboard}
       style={{
-        gridTemplateColumns: `repeat(${dashboardState.totalWidthUnit}, 200px)`,
-        gridTemplateRows: `repeat(${dashboardState.totalHeightUnit}, 180px)`,
+        gridTemplateColumns: `repeat(${dashboardState.totalWidthUnit}, ${DEFAULT_CHART_WIDTH}px)`,
+        gridTemplateRows: `repeat(${dashboardState.totalHeightUnit}, ${DEFAULT_CHART_HEIGHT}px)`,
         columnGap: DEFAULT_DASHBOARD_GAP,
         rowGap: DEFAULT_DASHBOARD_GAP,
         padding: DEFAULT_DASHBOARD_GAP

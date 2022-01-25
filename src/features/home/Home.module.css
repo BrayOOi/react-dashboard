@@ -1,7 +1,7 @@
 .home {
   background-color: lightgray;
   height: 800px;
-  padding-top: 50px;
+  margin-top: 40px;
 
   display: flex;
   flex-direction: column;
