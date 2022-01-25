@@ -1,7 +1,5 @@
 import React, { useMemo } from 'react';
 import useAppSelector from '../../app/hooks/useAppSelector';
-import { ChartType } from '../../presentation/chart/Chart';
-import { ChartMap } from './baseDashboardSlice';
 
 import Collector from './Collector';
 import ChartContainer from '../../presentation/chart/ChartContainer';
@@ -16,16 +14,16 @@ import {
 } from '../../constants/constants';
 
 import styles from './Dashboard.module.css';
+import { occupiedMapGen } from './utils';
 
 const BaseDashboard: React.FC = () => {
   const dashboardState = useAppSelector(state => state.dashboard);
 
-  const memoizedOccupiedMap = useMemo(() => 
-    occupiedMapGen(
+  const occupiedMap = occupiedMapGen(
       dashboardState.data,
       dashboardState.totalWidthUnit,
       dashboardState.totalHeightUnit
-    ), [dashboardState.data]);
+    );
 
   return (
     <div
@@ -44,7 +42,7 @@ const BaseDashboard: React.FC = () => {
             key={`${row},${column}`}
             column={column + 1}
             row={row + 1}
-            isOccupied={memoizedOccupiedMap[row][column]}
+            isOccupied={occupiedMap[row][column]}
           />
         ))
       ))}
@@ -63,23 +61,5 @@ const BaseDashboard: React.FC = () => {
     </div>
   );
 };
-
-const occupiedMapGen = (
-  charts: ChartMap,
-  totalWidth: number,
-  totalHeight: number,
-  ): Array<Array<boolean>> => {
-  let dashboardMap = Array(totalHeight).fill(0).map(() => Array(totalWidth).fill(false));
-
-  Object.values(charts).forEach((chart: ChartType) => {
-    for (let chartColumn = chart.columns[0] - 1; chartColumn < chart.columns[1] - 1; chartColumn++) {
-      for (let chartRow = chart.rows[0] - 1; chartRow < chart.rows[1] - 1; chartRow++) {
-        dashboardMap[chartRow][chartColumn] = true;
-      }
-    }
-  });
-
-  return dashboardMap;
-}
 
 export default BaseDashboard;
