@@ -2,7 +2,7 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
 import { useAppDispatch } from '../../app/hooks';
-import { DEFAULT_CHART_HEIGHT, DEFAULT_CHART_WIDTH } from '../../constants/constants';
+import { LIGHT_GREEN } from '../../constants/colors';
 import ITEM_TYPES from '../../constants/dnd';
 import { ChartType } from '../../presentation/chart/Chart';
 import { moveChart } from './baseDashboardSlice';
@@ -46,7 +46,7 @@ const Collector: React.FC<CollectorProps> = ({
         height: DEFAULT_CHART_HEIGHT,
         gridColumnStart: column,
         gridRowStart: row,
-        backgroundColor: canDrop ? 'green' : 'white'
+        backgroundColor: canDrop ? LIGHT_GREEN : 'white'
       }} />
   );
 };
