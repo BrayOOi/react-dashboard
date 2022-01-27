@@ -14,16 +14,9 @@ import {
 } from '../../constants/constants';
 
 import styles from './Dashboard.module.css';
-import { occupiedMapGen } from './utils';
 
 const BaseDashboard: React.FC = () => {
   const dashboardState = useAppSelector(state => state.dashboard);
-
-  const occupiedMap = occupiedMapGen(
-      dashboardState.data,
-      dashboardState.totalWidthUnit,
-      dashboardState.totalHeightUnit
-    );
 
   return (
     <div
@@ -42,7 +35,7 @@ const BaseDashboard: React.FC = () => {
             key={`${row},${column}`}
             column={column + 1}
             row={row + 1}
-            isOccupied={occupiedMap[row][column]}
+            isOccupied={dashboardState.occupiedMap[row][column]}
           />
         ))
       ))}

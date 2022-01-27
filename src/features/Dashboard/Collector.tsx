@@ -1,7 +1,7 @@
 // This is an element that will colleect any dropped 'chart' item
 import React from 'react';
 import { useDrop } from 'react-dnd';
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { LIGHT_GREEN } from '../../constants/colors';
 import { DEFAULT_CHART_HEIGHT, DEFAULT_CHART_WIDTH } from '../../constants/constants';
 import ITEM_TYPES from '../../constants/dnd';
@@ -21,6 +21,8 @@ const Collector: React.FC<CollectorProps> = ({
   isOccupied,
 }) => {
   const dispatch = useAppDispatch();
+  const occupiedMap = useAppSelector(state => state.dashboard.occupiedMap);
+
   const [{ isOver, canDrop }, drop] = useDrop(
     () => ({
       accept: ITEM_TYPES.CHART,
@@ -49,7 +51,7 @@ const Collector: React.FC<CollectorProps> = ({
         height: DEFAULT_CHART_HEIGHT,
         gridColumnStart: column,
         gridRowStart: row,
-        backgroundColor: canDrop ? LIGHT_GREEN : 'white'
+        backgroundColor: canDrop ? LIGHT_GREEN : 'white',
       }} />
   );
 };
