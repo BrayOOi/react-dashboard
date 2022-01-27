@@ -2,6 +2,19 @@ import { DEFAULT_DASHBOARD_HEIGHT_UNIT, DEFAULT_DASHBOARD_WIDTH_UNIT } from "../
 import { ChartType } from "../../presentation/chart/Chart";
 import { ChartMap } from "./baseDashboardSlice";
 
+export function setOccupiedMap(
+  map: Array<Array<boolean>>,
+  newColumns: [number, number],
+  newRows: [number, number],
+  value = true,
+  ) {
+  for (let chartColumn = newColumns[0] - 1; chartColumn < newColumns[1] - 1; chartColumn++) {
+    for (let chartRow = newRows[0] - 1; chartRow < newRows[1] - 1; chartRow++) {
+      map[chartRow][chartColumn] = value;
+    }
+  }
+}
+
 export const occupiedMapGen = (
   charts: ChartMap,
   totalWidth: number,
@@ -10,11 +23,11 @@ export const occupiedMapGen = (
   let dashboardMap = Array(totalHeight).fill(0).map(() => Array(totalWidth).fill(false));
 
   Object.values(charts).forEach((chart: ChartType) => {
-    for (let chartColumn = chart.columns[0] - 1; chartColumn < chart.columns[1] - 1; chartColumn++) {
-      for (let chartRow = chart.rows[0] - 1; chartRow < chart.rows[1] - 1; chartRow++) {
-        dashboardMap[chartRow][chartColumn] = true;
-      }
-    }
+    setOccupiedMap(
+      dashboardMap,
+      chart.columns,
+      chart.rows,
+    )
   });
 
   return dashboardMap;
