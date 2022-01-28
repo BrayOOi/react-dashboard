@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDrag } from 'react-dnd';
 
 import Chart, { ChartType } from './Chart';
@@ -7,6 +7,8 @@ import ITEM_TYPES from '../../constants/dnd';
 import { DEFAULT_CHART_PADDING } from '../../constants/constants';
 
 import styles from './Chart.module.css';
+import { useAppDispatch } from '../../app/hooks';
+import { dragChart } from '../../features/Dashboard/baseDashboardSlice';
 
 interface ChartContainerProps {
   columnStart: number;
@@ -25,6 +27,7 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
 
   chart
 }) => {
+  const dispatch = useAppDispatch();
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ITEM_TYPES.CHART,
     item: chart,
@@ -33,22 +36,33 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
     })
   }));
 
-  return (
-    <div
-      ref={drag}
-      className={styles.chart}
-      style={{
-        padding: DEFAULT_CHART_PADDING,
-        gridColumnStart: columnStart,
-        gridColumnEnd: columnEnd,
-        gridRowStart: rowStart,
-        gridRowEnd: rowEnd,
-      }}>
-      {!isDragging && (
-        <Chart {...chart} />
-      )}
-    </div>
-  );
+  useEffect(() => {
+    if (isDragging) {
+      dispatch(dragChart({
+        targetId: chart.id,
+        value: false
+      }));
+    }
+  }, [isDragging]);
+
+  if (!isDragging) {
+    return (
+      <div
+        ref={drag}
+        className={styles.chart}
+        style={{
+          padding: DEFAULT_CHART_PADDING,
+          gridColumnStart: columnStart,
+          gridColumnEnd: columnEnd,
+          gridRowStart: rowStart,
+          gridRowEnd: rowEnd,
+        }}>
+          <Chart {...chart} />
+      </div>
+    );
+  } else {
+    return null;
+  }
 };
 
 export default ChartContainer;

@@ -35,7 +35,6 @@ const BaseDashboard: React.FC = () => {
             key={`${row},${column}`}
             column={column + 1}
             row={row + 1}
-            isOccupied={dashboardState.occupiedMap[row][column]}
           />
         ))
       ))}

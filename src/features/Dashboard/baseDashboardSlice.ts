@@ -39,7 +39,6 @@ const INITIAL_DATA: ChartMap = {
     columns: [5, 7],
     rows: [2, 3],
     type: 'line'
-
   }
 };
 export const initialState: BaseDashboardState = {
@@ -60,6 +59,20 @@ export const baseDashboardSlice = createSlice({
 
     resizeChart: (state, action: PayloadAction<ChartType>) => {
       state.data[action.payload.id] = action.payload;
+    },
+    dragChart: (state, action: PayloadAction<{
+      targetId: string;
+      value: boolean;
+    }>) => {
+      const { targetId, value } = action.payload;
+      const { columns, rows } = state.data[targetId];
+
+      setOccupiedMap(
+        state.occupiedMap,
+        columns,
+        rows,
+        value
+      );
     },
     moveChart: (state, action: PayloadAction<{
       targetId: string;
@@ -106,6 +119,7 @@ export const {
   loadMap,
 
   resizeChart,
+  dragChart,
   moveChart,
   discardChart,
 } = baseDashboardSlice.actions;

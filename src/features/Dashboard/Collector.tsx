@@ -7,18 +7,16 @@ import { DEFAULT_CHART_HEIGHT, DEFAULT_CHART_WIDTH } from '../../constants/const
 import ITEM_TYPES from '../../constants/dnd';
 import { ChartType } from '../../presentation/chart/Chart';
 import { moveChart } from './baseDashboardSlice';
-import { calculateNewCoords, canDropChart } from './utils';
+import { calculateNewCoords, canDropChart, setOccupiedMap } from './utils';
 
 interface CollectorProps {
   column: number;
   row: number;
-  isOccupied: boolean;
 };
 
 const Collector: React.FC<CollectorProps> = ({
   column,
   row,
-  isOccupied,
 }) => {
   const dispatch = useAppDispatch();
   const occupiedMap = useAppSelector(state => state.dashboard.occupiedMap);
@@ -34,13 +32,13 @@ const Collector: React.FC<CollectorProps> = ({
         }
       })),
       canDrop: (item: ChartType) => 
-        !isOccupied && canDropChart(row, column, item),
+        canDropChart(row, column, item, occupiedMap),
       collect: (monitor) => ({
         isOver: !!monitor.isOver(),
         canDrop: !!monitor.canDrop(),
       })
     }),
-    [isOccupied]
+    [occupiedMap]
   );
 
   return (
@@ -52,7 +50,10 @@ const Collector: React.FC<CollectorProps> = ({
         gridColumnStart: column,
         gridRowStart: row,
         backgroundColor: canDrop ? LIGHT_GREEN : 'white',
-      }} />
+      }}>
+        {row}, {column}<br />
+      canDrop {canDrop ? 'true' : 'false'}<br />
+    </div>
   );
 };
 
