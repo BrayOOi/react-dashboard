@@ -40,31 +40,32 @@ export const canDropChart = (
   newRow0: number,
   newColumn0: number,
   item: ChartType,
-  occupiedMap: Array<Array<boolean>>) => {
+  chartArray: Array<ChartType>) => {
+  const newRows = calculateNewCoords(newRow0, item.rows);
+  const newColumns = calculateNewCoords(newColumn0, item.columns);
+
   // check if target will be out of dashboard
-  const zeroBasedRow = newRow0 - 1;
-  const zeroBasedCol = newColumn0 - 1;
-
-  const newRows = calculateNewCoords(zeroBasedRow, item.rows);
-  const newColumns = calculateNewCoords(zeroBasedCol, item.columns);
-
-  if (occupiedMap[zeroBasedRow][zeroBasedCol]) {
+  if (newColumns[1] - 1 > DEFAULT_DASHBOARD_WIDTH_UNIT) {
     return false;
   }
 
-  if (newColumns[1] > DEFAULT_DASHBOARD_WIDTH_UNIT) {
+  if (newRows[1] - 1 > DEFAULT_DASHBOARD_HEIGHT_UNIT) {
     return false;
   }
 
-  if (newRows[1]  > DEFAULT_DASHBOARD_HEIGHT_UNIT) {
-    return false;
-  }
-
-  // cheeck if target will collide with other charts
+  // check if target will collide with other charts
   for (let row = newRows[0]; row < newRows[1]; row++) {
     for (let column = newColumns[0]; column < newColumns[1]; column++) {
-      if (occupiedMap[row][column]) {
-        return false;
+      for (const chart of chartArray) {
+        if (
+          chart.id !== item.id // only run collision test with charts other than dragged chart
+          && row >= chart.rows[0]
+          && row < chart.rows[1]
+          && column >= chart.columns[0]
+          && column < chart.columns[1]
+        ) {
+          return false;
+        }
       }
     }
   }

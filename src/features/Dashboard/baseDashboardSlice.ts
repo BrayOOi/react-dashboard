@@ -15,7 +15,6 @@ export interface BaseDashboardState {
   data: ChartMap;
   totalHeightUnit: number;
   totalWidthUnit: number;
-  occupiedMap: Array<Array<boolean>>;
 }
 
 const newId = uuidv4();
@@ -45,7 +44,6 @@ export const initialState: BaseDashboardState = {
   data: INITIAL_DATA,
   totalHeightUnit: DEFAULT_DASHBOARD_HEIGHT_UNIT,
   totalWidthUnit: DEFAULT_DASHBOARD_WIDTH_UNIT,
-  occupiedMap: occupiedMapGen(INITIAL_DATA, DEFAULT_DASHBOARD_WIDTH_UNIT, DEFAULT_DASHBOARD_HEIGHT_UNIT),
 };
 
 export const baseDashboardSlice = createSlice({
@@ -54,25 +52,10 @@ export const baseDashboardSlice = createSlice({
   reducers: {
     loadMap: (state, action: PayloadAction<ChartMap>) => {
       state.data = action.payload;
-      state.occupiedMap = occupiedMapGen(action.payload, state.totalWidthUnit, state.totalHeightUnit);
     },
 
     resizeChart: (state, action: PayloadAction<ChartType>) => {
       state.data[action.payload.id] = action.payload;
-    },
-    dragChart: (state, action: PayloadAction<{
-      targetId: string;
-      value: boolean;
-    }>) => {
-      const { targetId, value } = action.payload;
-      const { columns, rows } = state.data[targetId];
-
-      setOccupiedMap(
-        state.occupiedMap,
-        columns,
-        rows,
-        value
-      );
     },
     moveChart: (state, action: PayloadAction<{
       targetId: string;
@@ -82,34 +65,11 @@ export const baseDashboardSlice = createSlice({
       };
     }>) => {
       const { targetId, newCoords } = action.payload;
-      const { columns, rows } = state.data[targetId];
-
-      setOccupiedMap(
-        state.occupiedMap,
-        columns,
-        rows,
-        false
-      );
 
       state.data[targetId].rows = newCoords.rows;
       state.data[targetId].columns = newCoords.columns;
-
-      setOccupiedMap(
-        state.occupiedMap,
-        newCoords.columns,
-        newCoords.rows
-      );
     },
     discardChart: (state, action: PayloadAction<string>) => {
-      const { columns, rows } = state.data[action.payload];
-
-      setOccupiedMap(
-        state.occupiedMap,
-        columns,
-        rows,
-        false
-      );
-
       delete state.data[action.payload];
     }
   }
@@ -119,7 +79,6 @@ export const {
   loadMap,
 
   resizeChart,
-  dragChart,
   moveChart,
   discardChart,
 } = baseDashboardSlice.actions;

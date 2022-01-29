@@ -8,7 +8,6 @@ import { DEFAULT_CHART_PADDING } from '../../constants/constants';
 
 import styles from './Chart.module.css';
 import { useAppDispatch } from '../../app/hooks';
-import { dragChart } from '../../features/Dashboard/baseDashboardSlice';
 
 interface ChartContainerProps {
   columnStart: number;
@@ -35,15 +34,6 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
       isDragging: !!monitor.isDragging()
     })
   }));
-
-  useEffect(() => {
-    if (isDragging) {
-      dispatch(dragChart({
-        targetId: chart.id,
-        value: false
-      }));
-    }
-  }, [isDragging]);
 
   if (!isDragging) {
     return (
