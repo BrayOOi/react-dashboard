@@ -3,8 +3,6 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
 
 import { calculateHeight, calculateWidth } from './utils';
 
-import styles from './Chart.module.css';
-
 import mockData from './mock-data';
 
 export type ChartType = {

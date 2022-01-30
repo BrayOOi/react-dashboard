@@ -2,21 +2,26 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { LIGHT_GREEN } from '../../constants/colors';
-import { DEFAULT_CHART_HEIGHT, DEFAULT_CHART_WIDTH } from '../../constants/constants';
-import ITEM_TYPES from '../../constants/dnd';
+
 import { ChartType } from '../../presentation/chart/Chart';
+
 import { moveChart } from './baseDashboardSlice';
-import { calculateNewCoords, canDropChart, setOccupiedMap } from './utils';
+import { adjustCoords, calculateNewCoords, canDropChart } from './utils';
+
+import { DEFAULT_CHART_HEIGHT, DEFAULT_CHART_WIDTH } from '../../constants/constants';
+import { LIGHT_GREEN } from '../../constants/colors';
+import ITEM_TYPES from '../../constants/dnd';
 
 interface CollectorProps {
   column: number;
   row: number;
+  effectiveCoords: [number, number]; // this is the coords where the mouse is interacting with the chart
 };
 
 const Collector: React.FC<CollectorProps> = ({
   column,
   row,
+  effectiveCoords,
 }) => {
   const dispatch = useAppDispatch();
   const chartMap = useAppSelector(state => state.dashboard.data);
@@ -24,18 +29,23 @@ const Collector: React.FC<CollectorProps> = ({
   const [{ canDrop }, drop] = useDrop(
     () => ({
       accept: ITEM_TYPES.CHART,
-      drop: (item: ChartType) => dispatch(moveChart({
-        targetId: item.id,
-        newCoords: {
-          columns: calculateNewCoords(column, item.columns),
-          rows: calculateNewCoords(row, item.rows),
-        }
-      })),
-      canDrop: (item: ChartType) => {
+      drop: (staleItem: ChartType) => {
+        const item = chartMap[staleItem.id];
+
+        dispatch(moveChart({
+          targetId: item.id,
+          newCoords: {
+            columns: calculateNewCoords(adjustCoords(column, item.columns[0], effectiveCoords[1]), item.columns),
+            rows: calculateNewCoords(adjustCoords(row, item.rows[0], effectiveCoords[0]), item.rows),
+          }
+        }));
+      },
+      canDrop: (staleItem: ChartType) => {
+        const item = chartMap[staleItem.id];
 
         return canDropChart(
-          calculateNewCoords(row, item.rows),
-          calculateNewCoords(column, item.columns),
+          calculateNewCoords(adjustCoords(row, item.rows[0], effectiveCoords[0]), item.rows),
+          calculateNewCoords(adjustCoords(column, item.columns[0], effectiveCoords[1]), item.columns),
           item,
           Object.values(chartMap));
       },
@@ -43,7 +53,7 @@ const Collector: React.FC<CollectorProps> = ({
         canDrop: !!monitor.canDrop(),
       })
     }),
-    [chartMap]
+    [chartMap, effectiveCoords]
   );
 
   return (

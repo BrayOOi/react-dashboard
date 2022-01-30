@@ -1,6 +1,17 @@
 import { DEFAULT_DASHBOARD_HEIGHT_UNIT, DEFAULT_DASHBOARD_WIDTH_UNIT } from "../../constants/constants";
 import { ChartType } from "../../presentation/chart/Chart";
 
+// By default, the user is interacting with the point (0, 0) of the chart
+// If not adjusted properly, the calculations made by Collectors will be based on (0, 0) wherever the user dragged the chart, thus making the results incorrect
+// The Collectors will determine whether they are viable locations to receive item by adding an adjustment: the distance between (0, 0) of chart and Dragging Point
+// This adjustment will align the calculations to the Dragging Point
+export const adjustCoords = (coord: number, initialCoord: number, draggedCoord: number) => {
+  const adjustment = initialCoord - draggedCoord;
+
+  return coord + adjustment;
+}
+
+// This will produce the coords that will be understood by the Grid system
 export const calculateNewCoords = (newCoord0: number, oldCoord: [number, number]): [number, number] => 
   ([newCoord0, newCoord0 + oldCoord[1] - oldCoord[0]]);
 
@@ -15,6 +26,14 @@ export const canDropChart = (
   }
 
   if (newRows[1] - 1 > DEFAULT_DASHBOARD_HEIGHT_UNIT) {
+    return false;
+  }
+
+  if (newRows[0] - 1 < 0) {
+    return false;
+  }
+
+  if (newColumns[0] - 1 < 0) {
     return false;
   }
 

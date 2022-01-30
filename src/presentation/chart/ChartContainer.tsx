@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useDrag } from 'react-dnd';
 
 import Chart, { ChartType } from './Chart';
@@ -7,7 +7,6 @@ import ITEM_TYPES from '../../constants/dnd';
 import { DEFAULT_CHART_PADDING } from '../../constants/constants';
 
 import styles from './Chart.module.css';
-import { useAppDispatch } from '../../app/hooks';
 
 interface ChartContainerProps {
   columnStart: number;
@@ -26,7 +25,6 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
 
   chart
 }) => {
-  const dispatch = useAppDispatch();
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ITEM_TYPES.CHART,
     item: chart,
