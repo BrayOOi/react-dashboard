@@ -1,9 +1,28 @@
-import React from 'react';
-import styles from './Header.module.css';
+import React, { useRef, useState } from 'react';
+import useOnClickOutside from '../../app/hooks/useOnClickOutside';
+
+import ChartModal from './ChartModal';
+
 import HeaderAction from './HeaderAction';
 import TrashCollector from './TrashCollector';
 
+import 'react-tabs/style/react-tabs.css';
+import styles from './Header.module.css';
+
+
 const Header: React.FC = () => {
+  const [modalState, setModalState] = useState({
+    shown: false,
+  });
+
+  const toggleModal = (value?: boolean) => setModalState(prevState => ({
+    ...prevState,
+    shown: value !== undefined ? value : !prevState.shown,
+  }));
+
+  const ref = useRef<HTMLDivElement>(null);
+  useOnClickOutside(ref, () => toggleModal(false));
+
   return (
     <header className={styles.header}>
       <div className={styles.brand}>
@@ -11,8 +30,11 @@ const Header: React.FC = () => {
       </div>
       <div className={styles["action-container"]}>
         <TrashCollector />
-        <HeaderAction>➕</HeaderAction>
-        <HeaderAction>⚙️</HeaderAction>
+        <HeaderAction onClick={toggleModal}>➕</HeaderAction>
+        {modalState.shown && (
+          <ChartModal ref={ref} />
+        )}
+        <HeaderAction onClick={() => alert('Coming soon!')}>⚙️</HeaderAction>
       </div>
     </header>
   );

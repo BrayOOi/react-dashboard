@@ -4,13 +4,16 @@ import useAppDispatch from '../../app/hooks/useAppDispatch';
 
 import HeaderAction from './HeaderAction';
 
-import ITEM_TYPES from '../../constants/dnd';
 import { discardChart } from '../../features/Dashboard/baseDashboardSlice';
+
+import { LIGHT_GREEN } from '../../constants/colors';
+import ITEM_TYPES from '../../constants/dnd';
+
 import { ChartType } from '../chart/Chart';
 
 const TrashCollector: React.FC = () => {
   const dispatch = useAppDispatch();
-  const [{ isOver, canDrop }, drop] = useDrop(
+  const [{ canDrop }, drop] = useDrop(
     () => ({
       accept: ITEM_TYPES.CHART,
       drop: (item: ChartType) => dispatch(discardChart(item.id)),
@@ -23,7 +26,13 @@ const TrashCollector: React.FC = () => {
   );
   
   return (
-    <div ref={drop}>
+    <div
+      ref={drop}
+      style={{
+        backgroundColor: canDrop ? 'rgba(210, 237, 197, 0.5)' : undefined,
+        boxShadow: canDrop ? `0px 0px 20px 5px ${LIGHT_GREEN}` : undefined
+      }}
+      >
       <HeaderAction>🗑️</HeaderAction>
     </div>
   );

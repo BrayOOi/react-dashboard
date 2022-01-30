@@ -4,12 +4,14 @@ import styles from './Header.module.css';
 
 interface HeaderActionProps {
   children: React.ReactNode;
+  [key: string]: any;
 }
 
 const HeaderAction: React.FC<HeaderActionProps> = ({
-  children
+  children,
+  ...props
 }) => (
-  <span className={styles.action}>
+  <span className={styles.action} {...props}>
     {children}
   </span>
 );
