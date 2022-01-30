@@ -21,7 +21,7 @@ const Collector: React.FC<CollectorProps> = ({
   const dispatch = useAppDispatch();
   const chartMap = useAppSelector(state => state.dashboard.data);
 
-  const [{ isOver, canDrop }, drop] = useDrop(
+  const [{ canDrop }, drop] = useDrop(
     () => ({
       accept: ITEM_TYPES.CHART,
       drop: (item: ChartType) => dispatch(moveChart({
@@ -31,10 +31,15 @@ const Collector: React.FC<CollectorProps> = ({
           rows: calculateNewCoords(row, item.rows),
         }
       })),
-      canDrop: (item: ChartType) => 
-        canDropChart(row, column, item, Object.values(chartMap)),
+      canDrop: (item: ChartType) => {
+
+        return canDropChart(
+          calculateNewCoords(row, item.rows),
+          calculateNewCoords(column, item.columns),
+          item,
+          Object.values(chartMap));
+      },
       collect: (monitor) => ({
-        isOver: !!monitor.isOver(),
         canDrop: !!monitor.canDrop(),
       })
     }),

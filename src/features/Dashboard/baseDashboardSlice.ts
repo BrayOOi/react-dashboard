@@ -7,7 +7,6 @@ import {
 } from "../../constants/constants";
 
 import { ChartType } from "../../presentation/chart/Chart";
-import { occupiedMapGen, setOccupiedMap } from "./utils";
 
 export type ChartMap = Record<string, ChartType>;
 
