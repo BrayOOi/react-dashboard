@@ -30,9 +30,10 @@
   right: 20px;
   top: 80px;
 
-  width: 300px;
-  height: 300px;
-  border: 1px solid grey;
+  width: 320px;
+  max-height: 600px;
+  overflow-y: scroll;
+  border: 1px solid lightgray;
   background-color: white;
   border-radius: 5px;
   padding: 5px;
@@ -40,11 +41,17 @@
 }
 
 .modal-section {
-  padding: 0 10px;
+  padding: 10px;
+  border-bottom: 1px solid lightgray;
+}
+
+.modal-section:last-child {
+  border-bottom: none;
 }
 
 .modal-section-header {
   color: gray;
+  padding-bottom: 2px;
 }
 
 .modal-section-header:hover {
@@ -53,5 +60,5 @@
 }
 
 .modal-section-chart-container {
-  margin-top: 10px;
+  margin: 10px 0;
 }
