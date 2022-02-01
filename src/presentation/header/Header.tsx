@@ -21,7 +21,11 @@ const Header: React.FC = () => {
   }));
 
   const ref = useRef<HTMLDivElement>(null);
-  useOnClickOutside(ref, () => toggleModal(false));
+  useOnClickOutside(ref, (e: any) => {
+    if (e.target.id !== 'add-chart') {
+      toggleModal(false);
+    }
+   });
 
   return (
     <header className={styles.header}>
@@ -30,7 +34,11 @@ const Header: React.FC = () => {
       </div>
       <div className={styles["action-container"]}>
         <TrashCollector />
-        <HeaderAction onClick={toggleModal}>➕</HeaderAction>
+
+        <HeaderAction 
+          id="add-chart"
+          onClick={() => toggleModal()}>➕</HeaderAction>
+        
         {modalState.shown && (
           <ChartModal
             ref={ref}
