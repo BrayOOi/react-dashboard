@@ -8,46 +8,64 @@ import ScatterChart from './ScatterChart/ScatterChart';
 
 import { ChartProps } from './types';
 
-export type ChartType = {
-  id: string;
-  columns: [number, number];
-  rows: [number, number];
-  type: 'area' | 'bar' | 'line' | 'pie' | 'scatter'
-}
-
-export type ChartProps = {
-  width: number;
-  height: number;
-}
-
-const Chart: React.FC<ChartType> = ({
-  columns,
-  rows,
-  type
+const Chart: React.FC<ChartProps> = ({
+  width,
+  height,
+  type,
+  xLegend,
+  yLegend,
+  tooltip = true,
 }) => {
-  const width = calculateChartWidth(columns[1] - columns[0]);
-  const height = calculateChartHeight(rows[1] - rows[0]);
-
   switch (type) {
     case 'area':
       return (
-        <AreaChart width={width} height={height} />
+        <AreaChart
+          width={width}
+          height={height}
+          xLegend={xLegend}
+          yLegend={yLegend}
+          tooltip={tooltip}
+        />
       );
     case 'bar':
       return (
-        <BarChart width={width} height={height} />
+        <BarChart
+          width={width}
+          height={height}
+          xLegend={xLegend}
+          yLegend={yLegend}
+          tooltip={tooltip}
+        />
       );
     case 'line':
       return (
-        <LineChart width={width} height={height} />
+        <LineChart
+          width={width}
+          height={height}
+          xLegend={xLegend}
+          yLegend={yLegend}
+          tooltip={tooltip}
+        />
       );
     case 'pie':
       return (
-        <PieChart width={width} height={height} />
+        <PieChart
+          width={width}
+          height={height}
+          xLegend={xLegend}
+          yLegend={yLegend}
+          tooltip={tooltip}
+        />
       );
     case 'scatter':
       return (
-        <ScatterChart width={width} height={height} />
+        <ScatterChart
+          width={width}
+          height={height}
+          xLegend={xLegend}
+          yLegend={yLegend}
+          tooltip={tooltip}
+        />
       );
   }
 };
