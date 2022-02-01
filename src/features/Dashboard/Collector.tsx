@@ -29,17 +29,11 @@ const Collector: React.FC<CollectorProps> = ({
   const [{ canDrop }, drop] = useDrop(
     () => ({
       accept: ITEM_TYPES.CHART,
-      drop: (staleItem: ChartType) => {
-        const item = chartMap[staleItem.id];
-
-        dispatch(moveChart({
-          targetId: item.id,
-          newCoords: {
-            columns: calculateNewCoords(adjustCoords(column, item.columns[0], effectiveCoords[1]), item.columns),
-            rows: calculateNewCoords(adjustCoords(row, item.rows[0], effectiveCoords[0]), item.rows),
-          }
-        }));
-      },
+      drop: (staleItem: ChartType) => dispatch(moveChart({
+        targetId: staleItem.id,
+        effectiveCoords,
+        interactedCoords: [row, column]
+      })),
       canDrop: (staleItem: ChartType) => {
         const item = chartMap[staleItem.id];
 

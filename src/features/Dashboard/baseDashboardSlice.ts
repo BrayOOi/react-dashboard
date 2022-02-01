@@ -12,6 +12,8 @@ import {
 
 import { ChartType } from "../../presentation/chart/Chart";
 import {
+  adjustCoords,
+  calculateNewCoords,
   checkChartCollision
 } from "./utils";
 
@@ -133,15 +135,15 @@ export const baseDashboardSlice = createSlice({
     },
     moveChart: (state, action: PayloadAction<{
       targetId: string;
-      newCoords: {
-        columns: [number, number];
-        rows: [number, number];
-      };
+      effectiveCoords: [number, number];
+      interactedCoords: [number, number];
     }>) => {
-      const { targetId, newCoords } = action.payload;
+      const { targetId, effectiveCoords, interactedCoords } = action.payload;
 
-      state.data[targetId].rows = newCoords.rows;
-      state.data[targetId].columns = newCoords.columns;
+      const chart = state.data[targetId];
+
+      state.data[targetId].rows = calculateNewCoords(adjustCoords(interactedCoords[0], chart.rows[0], effectiveCoords[0]), chart.rows);
+      state.data[targetId].columns = calculateNewCoords(adjustCoords(interactedCoords[1], chart.columns[0], effectiveCoords[1]), chart.columns);
     },
     discardChart: (state, action: PayloadAction<string>) => {
       delete state.data[action.payload];
