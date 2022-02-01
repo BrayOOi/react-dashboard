@@ -3,8 +3,7 @@ import React from 'react';
 import { useDrop } from 'react-dnd';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
-
-import { moveChart } from './baseDashboardSlice';
+import { addChart, moveChart } from './baseDashboardSlice';
 import { adjustCoords, calculateNewCoords, canDropChart } from './utils';
 
 import { DEFAULT_CHART_HEIGHT, DEFAULT_CHART_WIDTH } from '../../constants/constants';
@@ -30,19 +29,42 @@ const Collector: React.FC<CollectorProps> = ({
   const [{ canDrop }, drop] = useDrop(
     () => ({
       accept: ITEM_TYPES.CHART,
-      drop: (staleItem: ChartType) => dispatch(moveChart({
-        targetId: staleItem.id,
-        effectiveCoords,
-        interactedCoords: [row, column]
-      })),
-      canDrop: (staleItem: ChartType) => {
-        const item = chartMap[staleItem.id];
+      drop: (_item: ChartType | Omit<ChartType, 'id'>) => {
+        if ('id' in _item) {
+          // move operation
+          dispatch(moveChart({
+            targetId: _item.id,
+            effectiveCoords,
+            interactedCoords: [row, column]
+          }));
+        } else {
+          // add operation
+          dispatch(addChart({
+            columns: calculateNewCoords(column, _item.columns),
+            rows: calculateNewCoords(row, _item.rows),
+            type: _item.type
+          }));
+        }
+      },
+      canDrop: (_item: ChartType | Omit<ChartType, 'id'>) => {
+          if ('id' in _item) {
+            // move operation
 
-        return canDropChart(
-          calculateNewCoords(adjustCoords(row, item.rows[0], effectiveCoords[0]), item.rows),
-          calculateNewCoords(adjustCoords(column, item.columns[0], effectiveCoords[1]), item.columns),
-          item,
-          Object.values(chartMap));
+          const item = chartMap[_item.id];
+
+          return canDropChart(
+            calculateNewCoords(adjustCoords(row, item.rows[0], effectiveCoords[0]), item.rows),
+            calculateNewCoords(adjustCoords(column, item.columns[0], effectiveCoords[1]), item.columns),
+            Object.values(chartMap),
+            item,
+          );
+        } else {
+          return canDropChart(
+            calculateNewCoords(row, _item.rows),
+            calculateNewCoords(column, _item.columns),
+            Object.values(chartMap)
+          );
+        }
       },
       collect: (monitor) => ({
         canDrop: !!monitor.canDrop(),

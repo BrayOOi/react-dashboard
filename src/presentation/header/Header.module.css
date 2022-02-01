@@ -7,6 +7,10 @@
   box-sizing: border-box;
 }
 
+.tab-header {
+  text-transform: capitalize;
+}
+
 .brand {
   color: white;
 }
@@ -33,4 +37,21 @@
   border-radius: 5px;
   padding: 5px;
   z-index: 3;
+}
+
+.modal-section {
+  padding: 0 10px;
+}
+
+.modal-section-header {
+  color: gray;
+}
+
+.modal-section-header:hover {
+  color: black;
+  cursor: default;
+}
+
+.modal-section-chart-container {
+  margin-top: 10px;
 }

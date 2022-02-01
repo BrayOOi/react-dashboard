@@ -7,6 +7,8 @@ import Chart from './Chart';
 
 import { resizeChart } from '../../features/Dashboard/baseDashboardSlice';
 import {
+  calculateChartHeight,
+  calculateChartWidth,
   calculateContainerHeight,
   calculateContainerWidth
 } from './utils';
@@ -109,7 +111,13 @@ const ChartContainer: React.FC<ChartContainerProps> = ({
             }}
             >
             <div ref={drag}>
-              <Chart {...chart} />
+              <Chart
+                type={chart.type}
+                width={calculateChartWidth(chart.columns[1] - chart.columns[0])}
+                height={calculateChartHeight(chart.rows[1] - chart.rows[0])}
+                xLegend={chart.rows[1] - chart.rows[0] > 1}
+                yLegend={chart.columns[1] - chart.columns[0] > 1}
+              />
             </div>
           </div>
           </Resizable>

@@ -18,8 +18,9 @@ export const calculateNewCoords = (newCoord0: number, oldCoord: [number, number]
 export const canDropChart = (
   newRows: [number, number],
   newColumns: [number, number],
-  item: ChartType,
-  chartArray: Array<ChartType>) => {
+  chartArray: Array<ChartType>,
+  item?: ChartType,
+  ) => {
   // check if target will be out of dashboard
   if (newColumns[1] - 1 > DEFAULT_DASHBOARD_WIDTH_UNIT) {
     return false;
@@ -40,8 +41,8 @@ export const canDropChart = (
   if (checkChartCollision(
     newRows,
     newColumns,
-    item.id,
-    chartArray
+    chartArray,
+    item && item.id,
   )) {
     return false;
   }
@@ -53,8 +54,8 @@ export const canDropChart = (
 export const checkChartCollision = (
   rows: [number, number],
   columns: [number, number],
-  targetChartId: string,
-  chartArray: Array<ChartType>
+  chartArray: Array<ChartType>,
+  targetChartId?: string
 ) => {
   for (let row = rows[0]; row < rows[1]; row++) {
     for (let column = columns[0]; column < columns[1]; column++) {
