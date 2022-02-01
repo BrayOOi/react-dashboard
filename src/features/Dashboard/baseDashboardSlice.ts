@@ -26,29 +26,61 @@ export interface BaseDashboardState {
   totalWidthUnit: number;
 }
 
-const newId = uuidv4();
-const newId2 = uuidv4();
-const newId3 = uuidv4();
-const INITIAL_DATA: ChartMap = {
-  [newId]: {
-    id: newId,
-    columns: [2, 5],
-    rows: [1, 4],
+const initialData = [
+  {
+    columns: [1, 5],
+    rows: [1, 5],
     type: 'scatter'
   },
-  [newId2]: {
-    id: newId2,
+  {
     columns: [5, 6],
     rows: [1, 2],
     type: 'pie'
   },
-  [newId3]: {
-    id: newId3,
+  {
+    columns: [6, 7],
+    rows: [1, 2],
+    type: 'bar'
+  },
+  {
+    columns: [7, 8],
+    rows: [1, 2],
+    type: 'pie'
+  },
+  {
+    columns: [8, 9],
+    rows: [1, 2],
+    type: 'line'
+  },
+  {
     columns: [5, 7],
     rows: [2, 3],
     type: 'bar'
-  }
-};
+  },
+  {
+    columns: [7, 9],
+    rows: [2, 3],
+    type: 'area'
+  },
+  {
+    columns: [5, 7],
+    rows: [3, 5],
+    type: 'line'
+  },
+];
+
+const INITIAL_DATA: ChartMap = initialData.reduce((accumObj, chart) => {
+  let id = uuidv4();
+
+  return ({
+    ...accumObj,
+    [id]: {
+      id,
+      ...chart,
+    }
+  });
+}, {});
+
 export const initialState: BaseDashboardState = {
   data: INITIAL_DATA,
   totalHeightUnit: DEFAULT_DASHBOARD_HEIGHT_UNIT,

@@ -47,9 +47,8 @@ const Collector: React.FC<CollectorProps> = ({
         }
       },
       canDrop: (_item: ChartType | Omit<ChartType, 'id'>) => {
-          if ('id' in _item) {
-            // move operation
-
+        if ('id' in _item) {
+          // move operation
           const item = chartMap[_item.id];
 
           return canDropChart(
@@ -82,10 +81,7 @@ const Collector: React.FC<CollectorProps> = ({
         gridColumnStart: column,
         gridRowStart: row,
         backgroundColor: canDrop ? LIGHT_GREEN : 'white',
-      }}>
-        {row}, {column}<br />
-        canDrop {canDrop ? 'true' : 'false'}<br />
-    </div>
+      }} />
   );
 };
 
