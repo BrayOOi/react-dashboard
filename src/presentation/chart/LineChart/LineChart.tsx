@@ -4,9 +4,9 @@ import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'r
 import { DEFAULT_CHART_HEIGHT } from '../../../constants/constants';
 import data from './mock-data';
 
-import { ChartProps } from '../Chart';
+import { BaseChartProps } from '../types';
 
-const MyLineChart: React.FC<ChartProps> = ({
+const MyLineChart: React.FC<BaseChartProps> = ({
   width,
   height
 }) => (

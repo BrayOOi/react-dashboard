@@ -9,7 +9,7 @@ import { discardChart } from '../../features/Dashboard/baseDashboardSlice';
 import { LIGHT_GREEN } from '../../constants/colors';
 import ITEM_TYPES from '../../constants/dnd';
 
-import { ChartType } from '../chart/Chart';
+import { ChartType } from '../chart/types';
 
 const TrashCollector: React.FC = () => {
   const dispatch = useAppDispatch();

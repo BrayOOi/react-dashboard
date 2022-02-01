@@ -1,5 +1,7 @@
 import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+
+import { ChartType } from '../chart/types';
 import CHART_TEMPLATES from './chart-data';
 
 import styles from './Header.module.css';

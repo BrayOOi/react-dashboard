@@ -3,9 +3,9 @@ import { Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis } from "recharts"
 
 import data from './mock-data';
 
-import { ChartProps } from '../Chart';
+import { BaseChartProps } from '../types';
 
-const MyAreaChart: React.FC<ChartProps> = ({
+const MyAreaChart: React.FC<BaseChartProps> = ({
   width,
   height
 }) => (

@@ -3,9 +3,9 @@ import { Pie, PieChart } from 'recharts';
 
 import data from './mock-data';
 
-import { ChartProps } from '../Chart';
+import { BaseChartProps } from '../types';
 
-const MyPieChart: React.FC<ChartProps> = ({
+const MyPieChart: React.FC<BaseChartProps> = ({
   width,
   height
 }) => (

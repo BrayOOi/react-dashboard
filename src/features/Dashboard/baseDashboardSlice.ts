@@ -10,12 +10,13 @@ import {
   DEFAULT_DASHBOARD_WIDTH_UNIT
 } from "../../constants/constants";
 
-import { ChartType } from "../../presentation/chart/Chart";
 import {
   adjustCoords,
   calculateNewCoords,
   checkChartCollision
 } from "./utils";
+
+import { ChartType } from "../../presentation/chart/types";
 
 export type ChartMap = Record<string, ChartType>;
 
@@ -62,6 +63,14 @@ export const baseDashboardSlice = createSlice({
       state.data = action.payload;
     },
 
+    addChart: (state, action: PayloadAction<Omit<ChartType, 'id'>>) => {
+      const newId = uuidv4();
+
+      state.data[newId] = {
+        id: newId,
+        ...action.payload,
+      };
+    },
     resizeChart: (state, action: PayloadAction<{
       delta: {
         width: number;
@@ -124,8 +133,8 @@ export const baseDashboardSlice = createSlice({
       if (!checkChartCollision(
         nextChartCoords.rows,
         nextChartCoords.columns,
-        targetChartId,
-        Object.values(state.data)
+        Object.values(state.data),
+        targetChartId
       )) {
         state.data[targetChartId] = {
           ...state.data[targetChartId],
@@ -154,6 +163,7 @@ export const baseDashboardSlice = createSlice({
 export const {
   loadMap,
 
+  addChart,
   resizeChart,
   moveChart,
   discardChart,

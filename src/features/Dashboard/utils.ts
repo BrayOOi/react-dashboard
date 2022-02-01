@@ -1,5 +1,5 @@
 import { DEFAULT_DASHBOARD_HEIGHT_UNIT, DEFAULT_DASHBOARD_WIDTH_UNIT } from "../../constants/constants";
-import { ChartType } from "../../presentation/chart/Chart";
+import { ChartType } from "../../presentation/chart/types";
 
 // By default, the user is interacting with the point (0, 0) of the chart
 // If not adjusted properly, the calculations made by Collectors will be based on (0, 0) wherever the user dragged the chart, thus making the results incorrect

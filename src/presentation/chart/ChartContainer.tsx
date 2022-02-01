@@ -3,7 +3,7 @@ import { Resizable } from 'react-resizable';
 import { useDrag } from 'react-dnd';
 import { useAppDispatch } from '../../app/hooks';
 
-import Chart, { ChartType } from './Chart';
+import Chart from './Chart';
 
 import { resizeChart } from '../../features/Dashboard/baseDashboardSlice';
 import {
@@ -21,6 +21,8 @@ import {
 } from '../../constants/constants';
 
 import styles from './Chart.module.css';
+
+import { ChartType } from './types';
 
 interface ChartContainerProps {
   columnStart: number;

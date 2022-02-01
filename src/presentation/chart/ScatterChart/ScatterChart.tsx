@@ -5,9 +5,9 @@ import { DEFAULT_CHART_HEIGHT } from '../../../constants/constants';
 import dataA from './mock-data-1';
 import dataB from './mock-data-2';
 
-import { ChartProps } from '../Chart';
+import { BaseChartProps } from '../types';
 
-const MyScatterChart: React.FC<ChartProps> = ({
+const MyScatterChart: React.FC<BaseChartProps> = ({
   width,
   height
 }) => (

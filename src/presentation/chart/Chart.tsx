@@ -6,10 +6,7 @@ import LineChart from './LineChart/LineChart';
 import PieChart from './PieChart/PieChart';
 import ScatterChart from './ScatterChart/ScatterChart';
 
-import {
-  calculateChartHeight,
-  calculateChartWidth
-} from './utils';
+import { ChartProps } from './types';
 
 export type ChartType = {
   id: string;

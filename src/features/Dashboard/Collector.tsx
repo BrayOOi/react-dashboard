@@ -3,7 +3,6 @@ import React from 'react';
 import { useDrop } from 'react-dnd';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
-import { ChartType } from '../../presentation/chart/Chart';
 
 import { moveChart } from './baseDashboardSlice';
 import { adjustCoords, calculateNewCoords, canDropChart } from './utils';
@@ -11,6 +10,8 @@ import { adjustCoords, calculateNewCoords, canDropChart } from './utils';
 import { DEFAULT_CHART_HEIGHT, DEFAULT_CHART_WIDTH } from '../../constants/constants';
 import { LIGHT_GREEN } from '../../constants/colors';
 import ITEM_TYPES from '../../constants/dnd';
+
+import { ChartType } from '../../presentation/chart/types';
 
 interface CollectorProps {
   column: number;
