@@ -37,22 +37,40 @@ export const canDropChart = (
     return false;
   }
 
-  // check if target will collide with other charts
-  for (let row = newRows[0]; row < newRows[1]; row++) {
-    for (let column = newColumns[0]; column < newColumns[1]; column++) {
+  if (checkChartCollision(
+    newRows,
+    newColumns,
+    item.id,
+    chartArray
+  )) {
+    return false;
+  }
+
+  return true;
+};
+
+// check if target will collide with other charts
+export const checkChartCollision = (
+  rows: [number, number],
+  columns: [number, number],
+  targetChartId: string,
+  chartArray: Array<ChartType>
+) => {
+  for (let row = rows[0]; row < rows[1]; row++) {
+    for (let column = columns[0]; column < columns[1]; column++) {
       for (const chart of chartArray) {
         if (
-          chart.id !== item.id // only run collision test with charts other than dragged chart
+          chart.id !== targetChartId // only run collision test with charts other than dragged chart
           && row >= chart.rows[0]
           && row < chart.rows[1]
           && column >= chart.columns[0]
           && column < chart.columns[1]
         ) {
-          return false;
+          return true;
         }
       }
     }
   }
 
-  return true;
-};
+  return false;
+}
