@@ -1,7 +1,10 @@
 import React from 'react';
 import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
-import { ChartProps } from '../Chart';
+
+import { DEFAULT_CHART_HEIGHT } from '../../../constants/constants';
 import data from './mock-data';
+
+import { ChartProps } from '../Chart';
 
 const MyLineChart: React.FC<ChartProps> = ({
   width,
@@ -13,7 +16,7 @@ const MyLineChart: React.FC<ChartProps> = ({
     <XAxis dataKey="name" />
     <YAxis />
     <Tooltip />
-    <Legend />
+    {height > (DEFAULT_CHART_HEIGHT * 1) && <Legend />}
     <Line type="monotone" dataKey="pv" stroke="#8884d8" />
     <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
   </LineChart>

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from 'recharts';
-import { ChartProps } from '../Chart';
 
+import { DEFAULT_CHART_HEIGHT } from '../../../constants/constants';
 import data from './mock-data';
+
+import { ChartProps } from '../Chart';
 
 const MyBarChart: React.FC<ChartProps> = ({
   width,
@@ -13,7 +15,7 @@ const MyBarChart: React.FC<ChartProps> = ({
     <XAxis dataKey="name" />
     <YAxis />
     <Tooltip />
-    <Legend />
+    {height > (DEFAULT_CHART_HEIGHT * 1) && <Legend />}
     <Bar dataKey="pv" fill="#8884d8" />
     <Bar dataKey="uv" fill="#82ca9d" />
   </BarChart>

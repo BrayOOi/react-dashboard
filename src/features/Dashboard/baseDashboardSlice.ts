@@ -33,19 +33,19 @@ const INITIAL_DATA: ChartMap = {
     id: newId,
     columns: [2, 5],
     rows: [1, 4],
-    type: 'line'
+    type: 'scatter'
   },
   [newId2]: {
     id: newId2,
     columns: [5, 6],
     rows: [1, 2],
-    type: 'line'
+    type: 'pie'
   },
   [newId3]: {
     id: newId3,
     columns: [5, 7],
     rows: [2, 3],
-    type: 'line'
+    type: 'bar'
   }
 };
 export const initialState: BaseDashboardState = {

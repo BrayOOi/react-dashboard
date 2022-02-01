@@ -1,8 +1,9 @@
 import React from 'react';
 import { Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis } from "recharts";
-import { ChartProps } from '../Chart';
 
 import data from './mock-data';
+
+import { ChartProps } from '../Chart';
 
 const MyAreaChart: React.FC<ChartProps> = ({
   width,

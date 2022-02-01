@@ -1,8 +1,11 @@
 import React from 'react';
 import { CartesianGrid, Legend, Scatter, ScatterChart, Tooltip, XAxis, YAxis, ZAxis } from 'recharts';
-import { ChartProps } from '../Chart';
+
+import { DEFAULT_CHART_HEIGHT } from '../../../constants/constants';
 import dataA from './mock-data-1';
 import dataB from './mock-data-2';
+
+import { ChartProps } from '../Chart';
 
 const MyScatterChart: React.FC<ChartProps> = ({
   width,
@@ -15,7 +18,7 @@ const MyScatterChart: React.FC<ChartProps> = ({
     <YAxis dataKey="y" name="weight" unit="kg" />
     <ZAxis dataKey="z" range={[64, 144]} name="score" unit="km" />
     <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-    <Legend />
+    {height > (DEFAULT_CHART_HEIGHT * 1) && <Legend />}
     <Scatter name="A school" data={dataA} fill="#8884d8" />
     <Scatter name="B school" data={dataB} fill="#82ca9d" />
   </ScatterChart>
