@@ -10,7 +10,8 @@ const MyAreaChart: React.FC<BaseChartProps> = ({
   height,
   xLegend,
   yLegend,
-  tooltip
+  tooltip,
+  style
 }) => (
   <AreaChart width={width} height={height} data={data}
     margin={{
@@ -18,7 +19,8 @@ const MyAreaChart: React.FC<BaseChartProps> = ({
       right: yLegend ? 30 : 10,
       bottom: xLegend ? 0 : -20,
       left: yLegend ? 0 : -40,
-    }}>
+    }}
+    style={style}>
     <defs>
       <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
         <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>

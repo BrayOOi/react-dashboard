@@ -15,6 +15,7 @@ const Chart: React.FC<ChartProps> = ({
   xLegend,
   yLegend,
   tooltip = true,
+  style,
 }) => {
   switch (type) {
     case 'area':
@@ -25,6 +26,7 @@ const Chart: React.FC<ChartProps> = ({
           xLegend={xLegend}
           yLegend={yLegend}
           tooltip={tooltip}
+          style={style}
         />
       );
     case 'bar':
@@ -35,6 +37,7 @@ const Chart: React.FC<ChartProps> = ({
           xLegend={xLegend}
           yLegend={yLegend}
           tooltip={tooltip}
+          style={style}
         />
       );
     case 'line':
@@ -45,6 +48,7 @@ const Chart: React.FC<ChartProps> = ({
           xLegend={xLegend}
           yLegend={yLegend}
           tooltip={tooltip}
+          style={style}
         />
       );
     case 'pie':
@@ -55,6 +59,7 @@ const Chart: React.FC<ChartProps> = ({
           xLegend={xLegend}
           yLegend={yLegend}
           tooltip={tooltip}
+          style={style}
         />
       );
     case 'scatter':
@@ -65,6 +70,7 @@ const Chart: React.FC<ChartProps> = ({
           xLegend={xLegend}
           yLegend={yLegend}
           tooltip={tooltip}
+          style={style}
         />
       );
   }

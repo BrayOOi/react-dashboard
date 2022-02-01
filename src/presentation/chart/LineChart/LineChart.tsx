@@ -10,7 +10,8 @@ const MyLineChart: React.FC<BaseChartProps> = ({
   height,
   xLegend,
   yLegend,
-  tooltip
+  tooltip,
+  style
 }) => (
   <LineChart width={width} height={height} data={data}
     margin={{
@@ -18,7 +19,8 @@ const MyLineChart: React.FC<BaseChartProps> = ({
       right: yLegend ? 30 : 10,
       bottom: xLegend ? 5 : -20,
       left: yLegend ? 20 : -40,
-    }}>
+    }}
+    style={style}>
     <CartesianGrid strokeDasharray="3 3" />
     <XAxis dataKey="name" tick={xLegend} />
     <YAxis tick={yLegend} />

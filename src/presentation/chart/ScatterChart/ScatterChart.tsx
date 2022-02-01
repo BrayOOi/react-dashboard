@@ -11,7 +11,8 @@ const MyScatterChart: React.FC<BaseChartProps> = ({
   height,
   xLegend,
   yLegend,
-  tooltip
+  tooltip,
+  style
 }) => (
   <ScatterChart width={width} height={height}
     margin={{
@@ -19,7 +20,8 @@ const MyScatterChart: React.FC<BaseChartProps> = ({
       right: yLegend ? 20 : 10,
       bottom: xLegend ? 10 : -20,
       left: yLegend ? 10 : -40,
-    }}>
+    }}
+    style={style}>
     <CartesianGrid strokeDasharray="3 3" />
     <XAxis dataKey="x" name="stature" unit="cm" tick={xLegend} />
     <YAxis dataKey="y" name="weight" unit="kg" tick={yLegend} />

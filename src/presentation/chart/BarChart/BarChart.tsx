@@ -10,7 +10,8 @@ const MyBarChart: React.FC<BaseChartProps> = ({
   height,
   xLegend,
   yLegend,
-  tooltip
+  tooltip,
+  style
 }) => (
   <BarChart
     width={width}
@@ -22,7 +23,7 @@ const MyBarChart: React.FC<BaseChartProps> = ({
       bottom: xLegend ? 10 : -20,
       left: yLegend ? 10 : -40,
     }}
-  >
+    style={style}>
     <CartesianGrid strokeDasharray="3 3" />
     <XAxis dataKey="name" tick={xLegend} />
     <YAxis tick={yLegend} />

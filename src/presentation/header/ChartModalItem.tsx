@@ -50,6 +50,9 @@ const ChartModalItem: React.FC<ChartModalItemType> = ({
         yLegend={false}
         tooltip={false}
         type={type}
+        style={{
+          cursor: isDragging ? 'grabbing' : 'grab' // TODO
+        }}
       />
     </div>
   );

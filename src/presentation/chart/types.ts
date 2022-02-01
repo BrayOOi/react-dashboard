@@ -11,6 +11,7 @@ export type BaseChartProps = {
   xLegend: boolean;
   yLegend: boolean;
   tooltip?: boolean;
+  style?: any;
 }
 
 export type ChartProps = {
