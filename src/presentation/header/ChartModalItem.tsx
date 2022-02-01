@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDrag } from 'react-dnd';
 
 import Chart from '../chart/Chart';
@@ -11,12 +11,14 @@ type ChartModalItemType = {
   type: ChartType["type"];
   row: number;
   column: number;
+  toggleModalOff: () => void;
 }
 
 const ChartModalItem: React.FC<ChartModalItemType> = ({
   type,
   row,
-  column
+  column,
+  toggleModalOff
 }) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: ITEM_TYPES.CHART,
@@ -29,6 +31,12 @@ const ChartModalItem: React.FC<ChartModalItemType> = ({
       isDragging: !!monitor.isDragging()
     })
   }));
+
+  useEffect(() => {
+    if (isDragging) {
+      toggleModalOff();
+    }
+  }, [isDragging]);
 
   return (
     <div ref={drag} style={{

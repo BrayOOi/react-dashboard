@@ -32,7 +32,10 @@ const Header: React.FC = () => {
         <TrashCollector />
         <HeaderAction onClick={toggleModal}>➕</HeaderAction>
         {modalState.shown && (
-          <ChartModal ref={ref} />
+          <ChartModal
+            ref={ref}
+            toggleModalOff={() => toggleModal(false)}
+          />
         )}
         <HeaderAction onClick={() => alert('Coming soon!')}>⚙️</HeaderAction>
       </div>
