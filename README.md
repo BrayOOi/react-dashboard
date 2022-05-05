@@ -1,8 +1,33 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+## React Dashboard
+
+This project is scaffolded using CRA and is built using TypeScript, React, Redux Toolkit and more. For better UX, React DnD is used to provide the drag and drop functionality whereas React Resizable is used to allow the user to resize the charts and customize the dashboard layout. The app will indicate all the feasible spots to drop or resize a chart.
+
+## Features
+
+Below are the basic features for the application:
+
+- The user is presented with a pre-configured dashboard with different chart tiles prefilled with mock-up data.
+- The user can drag and drop any chart tiles to any unoccupied slots
+- The user can resize chart tiles to any unoccupied slots
+- The user can drag charts of any sizes from the library and drop it to any feasible slots on the dashboard
+- The user can drop any chart to the trash can and remove it from the dashboard
+
+
+## Roadmap
+
+- Add config persisting capability
+- Polish the UI
+- Fix responsiveness issue
+- Add more customization options for the charts
+- Add a server to store the configs at a database
+- Add ability to read data from third party APIs
 
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm install`
+Install the necessary modules used by the project.
 
 ### `npm start`
 
@@ -27,18 +52,3 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
